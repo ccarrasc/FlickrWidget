@@ -1,4 +1,4 @@
-package com.machinemode.httpwidget;
+package com.machinemode.flickrwidget;
 
 import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
@@ -16,11 +16,6 @@ import android.widget.TextView;
 public class WidgetProvider extends AppWidgetProvider
 {
     private static final String TAG = WidgetProvider.class.getSimpleName();
-    
-    private ImageView thumbnail;
-    private ProgressBar progressBar;
-    private TextView textView;
-    private RemoteViews views;
     
     /* (non-Javadoc)
      * @see android.appwidget.AppWidgetProvider#onAppWidgetOptionsChanged(android.content.Context, android.appwidget.AppWidgetManager, int, android.os.Bundle)

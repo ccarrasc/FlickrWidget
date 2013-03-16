@@ -1,4 +1,4 @@
-package com.machinemode.httpwidget.util;
+package com.machinemode.flickrwidget.util;
 
 import java.io.IOException;
 import java.io.InputStream;

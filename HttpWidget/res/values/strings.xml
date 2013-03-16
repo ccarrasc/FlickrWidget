@@ -1,5 +1,11 @@
 <resources>
-
     <string name="app_name">HttpWidget</string>
-
+    <string name="imageDescription">Image</string>
+    
+    <string name="flickr_api_key">df779ed17bc60a0dce2344f1b6c08973</string>
+    <string name="flickr_api_secret">de197e469ee20f1c</string>
+    <string name="flickr_app_name">FlickrWidget</string>
+    
+    <string name="flickr_response_format">json</string>
+    <string name="flickr_interestingness_getList">http://api.flickr.com/services/rest/?method=flickr.interestingness.getList</string>
 </resources>
