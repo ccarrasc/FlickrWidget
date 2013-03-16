@@ -17,7 +17,6 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.machinemode.flickrwidget.domain.Interestingness;
 import com.machinemode.flickrwidget.domain.Photo;
-import com.machinemode.flickrwidget.domain.Photos;
 import com.machinemode.flickrwidget.util.BooleanAdapter;
 import com.machinemode.flickrwidget.util.HttpImageDecoder;
 
