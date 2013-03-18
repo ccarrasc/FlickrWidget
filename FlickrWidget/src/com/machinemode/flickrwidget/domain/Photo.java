@@ -9,16 +9,16 @@ public class Photo
 {
     private static final transient String TAG = Photo.class.getSimpleName();
     
-    private String id;
-    private String owner;
-    private String secret;
-    private String server;
+    private String id = new String();
+    private String owner = new String();
+    private String secret = new String();
+    private String server = new String();
+    private String title = new String();
     private int farm;
-    private String title;
     private boolean ispublic;
     private boolean isfriend;
     private boolean isfamily;
-    private transient String url;
+    private transient String url = new String();
     private transient Bitmap bitmap;
     
     public Photo() { }

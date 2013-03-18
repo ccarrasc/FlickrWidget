@@ -87,7 +87,17 @@ public final class HttpImageDecoder
         final int height = options.outHeight;
         final int width = options.outWidth;
         int inSampleSize = 1;
-    
+        
+        if(reqWidth <= 0)
+        {
+            reqWidth = 1;
+        }
+        
+        if(reqHeight <= 0)
+        {
+            reqHeight = 1;
+        }
+        
         if(height > reqHeight || width > reqWidth) 
         {
             if(width > height) 

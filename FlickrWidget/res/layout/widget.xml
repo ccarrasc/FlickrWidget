@@ -14,8 +14,8 @@
         
         <RelativeLayout 
 		    android:id="@+id/thumbnailFrame"
-		    android:layout_width="40dp"
-		    android:layout_height="40dp"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
 		    android:layout_alignParentTop="true"
 		    android:layout_alignParentLeft="true" >
     
@@ -47,7 +47,9 @@
 	        android:layout_height="wrap_content" 
 	        android:textIsSelectable="false"
 	        android:layout_alignParentTop="true"
-	        android:layout_toRightOf="@id/thumbnailFrame"/>
+	        android:layout_centerHorizontal="true"
+	        android:textColor="#FFFFFFFF"
+	        android:background="#7F000000"/>
             
         <TextView
             android:id="@+id/updateCounter"
@@ -55,7 +57,9 @@
             android:layout_height="wrap_content" 
             android:textIsSelectable="false"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:textColor="#FFFFFFFF"
+            android:background="#7F000000"/>
         
     </RelativeLayout>
 	
