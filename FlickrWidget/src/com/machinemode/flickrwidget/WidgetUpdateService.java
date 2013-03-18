@@ -24,62 +24,63 @@ import android.widget.RemoteViews;
 
 public class WidgetUpdateService extends Service implements TaskCompleteListener
 {
-	private static final String TAG = WidgetUpdateService.class.getSimpleName();
-	private static int updateCount = 0;
-	
-	private Context context;
-	private AppWidgetManager appWidgetManager;
-	private int[] appWidgetIds;
+    private static final String TAG = WidgetUpdateService.class.getSimpleName();
+    private static int updateCount = 0;
 
-	@Override
-	public int onStartCommand(Intent intent, int flags, int startId)
-	{
-		Log.i(TAG, "onStartCommand()");
-		context = getApplicationContext();		
-		appWidgetManager = AppWidgetManager.getInstance(context);
-		appWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
+    private Context context;
+    private AppWidgetManager appWidgetManager;
+    private int[] appWidgetIds;
 
-		new RequestPhotoList(this).execute(buildRequestUri());
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId)
+    {
+        Log.i(TAG, "onStartCommand()");
+        context = getApplicationContext();
+        appWidgetManager = AppWidgetManager.getInstance(context);
+        appWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
 
-		return START_NOT_STICKY;		
-	}
-	
-	@Override
-	public IBinder onBind(Intent intent) 
-	{
-		return null;
-	}
+        new RequestPhotoList(this).execute(buildRequestUri());
 
-	@Override
-	public void onTaskComplete(List<Interestingness> interestingnessList) 
-	{
-	    if(!interestingnessList.isEmpty())
-	    {
-	        // Just get the first response for now...
-	        updateWidgets(interestingnessList.get(0));
-	    }
-	}
-	
-	private void updateWidgets(Interestingness interestingness)
-	{
-	    List<Photo> photoList = interestingness.getPhotos().getPhoto();
-	    
+        return START_NOT_STICKY;
+    }
+
+    @Override
+    public IBinder onBind(Intent intent)
+    {
+        return null;
+    }
+
+    @Override
+    public void onTaskComplete(List<Interestingness> interestingnessList)
+    {
+        if(!interestingnessList.isEmpty())
+        {
+            // Just get the first response for now...
+            updateWidgets(interestingnessList.get(0));
+        }
+    }
+
+    private void updateWidgets(Interestingness interestingness)
+    {
+        List<Photo> photoList = interestingness.getPhotos().getPhoto();
+
         for(int id : appWidgetIds)
         {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
             views.setTextViewText(R.id.updateCounter, String.valueOf(updateCount++));
-            
+
             if(!photoList.isEmpty())
             {
                 Photo photo = photoList.get(0);
-                
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(photo.getUrl())); 
-                browserIntent.addCategory(Intent.CATEGORY_BROWSABLE); 
-                
-                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, browserIntent, 0); 
+
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(photo.getUrl()));
+                browserIntent.addCategory(Intent.CATEGORY_BROWSABLE);
+
+                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, browserIntent,
+                        0);
                 views.setOnClickPendingIntent(R.id.widget, pendingIntent);
-                
-                views.setImageViewBitmap(R.id.thumbnail, photo.getBitmap());  
+
+                views.setImageViewBitmap(R.id.thumbnail, photo.getBitmap());
                 views.setTextViewText(R.id.title, photo.getTitle());
                 views.setViewVisibility(R.id.progressBar, View.INVISIBLE);
             }
@@ -87,26 +88,26 @@ public class WidgetUpdateService extends Service implements TaskCompleteListener
             {
                 views.setTextViewText(R.id.title, "No images found");
             }
-            
+
             appWidgetManager.updateAppWidget(id, views);
-        }   
-	}
-	
-	private String buildRequestUri()
-	{
-	    String uri = context.getString(R.string.flickr_interestingness_getList);
+        }
+    }
+
+    private String buildRequestUri()
+    {
+        String uri = context.getString(R.string.flickr_interestingness_getList);
         String api_key = context.getString(R.string.flickr_api_key);
         String format = context.getString(R.string.flickr_response_format);
-        
+
         RequestParams params = new RequestParams();
         params.setPerPage(5);
 
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.add(Calendar.DATE, -1);        
+        calendar.add(Calendar.DATE, -1);
         params.setDate(calendar.getTime());
-        
+
         return Request.buildRequest(uri, api_key, format, params);
-	}
+    }
 }

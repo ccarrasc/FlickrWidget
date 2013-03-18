@@ -6,7 +6,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-public class BooleanAdapter extends TypeAdapter<Boolean> 
+public class BooleanAdapter extends TypeAdapter<Boolean>
 {
 
     @Override

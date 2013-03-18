@@ -7,40 +7,42 @@ import android.util.Log;
 public class Interestingness
 {
     private static final transient String TAG = Interestingness.class.getSimpleName();
-    
+
     private Photos photos = new Photos();
     private String stat = new String();
     private String message = new String();
     private int code;
-    
-    public Interestingness() { }
-    
+
+    public Interestingness()
+    {
+    }
+
     public Photos getPhotos()
     {
         return photos;
     }
-    
+
     public String getStat()
     {
         return stat;
     }
-    
+
     public int getCode()
     {
         return code;
     }
-    
+
     public String getMessage()
     {
         return message;
     }
-    
+
     @Override
     public String toString()
     {
         StringBuilder stringBuilder = new StringBuilder();
         Field fields[] = this.getClass().getDeclaredFields();
-        
+
         for(Field field : fields)
         {
             stringBuilder.append(field.getName());
@@ -61,7 +63,7 @@ public class Interestingness
             }
             stringBuilder.append("\n");
         }
-        
+
         return stringBuilder.toString();
     }
 }

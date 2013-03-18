@@ -15,9 +15,11 @@ import com.machinemode.flickrwidget.util.BooleanAdapter;
 public class ResponseParser
 {
     private static final String TAG = ResponseParser.class.getSimpleName();
-    
-    private ResponseParser() { }
-    
+
+    private ResponseParser()
+    {
+    }
+
     public static Interestingness readJsonFeed(InputStream inputStream)
     {
         Interestingness interestingness = new Interestingness();
@@ -26,7 +28,7 @@ public class ResponseParser
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(boolean.class, new BooleanAdapter());
         Gson gson = builder.create();
-        
+
         try
         {
             interestingness = gson.fromJson(json, Interestingness.class);
@@ -39,7 +41,7 @@ public class ResponseParser
         {
             Log.e(TAG, "JsonIOException: " + e.getMessage());
         }
-        
+
         return interestingness;
     }
 }

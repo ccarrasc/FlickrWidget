@@ -9,14 +9,16 @@ import android.util.Log;
 public class Photos
 {
     private static final transient String TAG = Photos.class.getSimpleName();
-    
+
     private int page;
     private int pages;
     private int perpage;
     private int total;
     private List<Photo> photo = new ArrayList<Photo>();
-    
-    public Photos() { }
+
+    public Photos()
+    {
+    }
 
     public int getPage()
     {
@@ -42,13 +44,13 @@ public class Photos
     {
         return photo;
     }
-    
+
     @Override
     public String toString()
     {
         StringBuilder stringBuilder = new StringBuilder();
         Field fields[] = this.getClass().getDeclaredFields();
-        
+
         for(Field field : fields)
         {
             stringBuilder.append(field.getName());
@@ -69,7 +71,7 @@ public class Photos
             }
             stringBuilder.append("\n");
         }
-        
+
         return stringBuilder.toString();
     }
 }

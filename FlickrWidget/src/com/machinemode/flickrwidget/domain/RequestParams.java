@@ -23,14 +23,22 @@ public class RequestParams
      * per_page=100<br />
      * page=1<br />
      */
-    public RequestParams() { }
-    
+    public RequestParams()
+    {
+    }
+
     /**
      * Constructor - Sets the request parameters to be used for issuing an API call
-     * @param date A specific date to return interesting photos for
-     * @param galleryId The ID of the gallery of photos to return
-     * @param page The page of results to return. (default is 1)
-     * @param perPage Number of photos to return per page. The maximum allowed value is 500. (default is 100)
+     * 
+     * @param date
+     *            A specific date to return interesting photos for
+     * @param galleryId
+     *            The ID of the gallery of photos to return
+     * @param page
+     *            The page of results to return. (default is 1)
+     * @param perPage
+     *            Number of photos to return per page. The maximum allowed value is 500. (default is
+     *            100)
      */
     public RequestParams(Date date, String galleryId, int page, int perPage)
     {
@@ -87,27 +95,27 @@ public class RequestParams
         stringBuilder.append("gallery_id=");
         stringBuilder.append(gallery_id);
         stringBuilder.append('&');
-        
+
         stringBuilder.append("date=");
         stringBuilder.append(new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(date));
         stringBuilder.append('&');
-        
+
         stringBuilder.append("per_page=");
         stringBuilder.append(String.valueOf(per_page));
         stringBuilder.append('&');
-        
+
         stringBuilder.append("page=");
         stringBuilder.append(String.valueOf(page));
-        
+
         return stringBuilder.toString();
     }
-    
+
     @Override
     public String toString()
     {
         StringBuilder stringBuilder = new StringBuilder();
         Field fields[] = this.getClass().getDeclaredFields();
-        
+
         for(Field field : fields)
         {
             stringBuilder.append(field.getName());
@@ -128,7 +136,7 @@ public class RequestParams
             }
             stringBuilder.append("\n");
         }
-        
+
         return stringBuilder.toString();
     }
 }

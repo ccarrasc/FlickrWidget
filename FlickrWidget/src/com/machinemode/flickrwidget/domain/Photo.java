@@ -8,7 +8,7 @@ import android.util.Log;
 public class Photo
 {
     private static final transient String TAG = Photo.class.getSimpleName();
-    
+
     private String id = new String();
     private String owner = new String();
     private String secret = new String();
@@ -20,8 +20,10 @@ public class Photo
     private boolean isfamily;
     private transient String url = new String();
     private transient Bitmap bitmap;
-    
-    public Photo() { }
+
+    public Photo()
+    {
+    }
 
     public String getId()
     {
@@ -87,23 +89,24 @@ public class Photo
     {
         this.bitmap = bitmap;
     }
-    
+
     public static String buildUrl(Photo photo)
     {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("http://");
-        stringBuilder.append("farm").append(String.valueOf(photo.getFarm())).append(".staticflickr.com/");
+        stringBuilder.append("farm").append(String.valueOf(photo.getFarm()))
+                .append(".staticflickr.com/");
         stringBuilder.append(photo.getServer()).append('/');
-        stringBuilder.append(photo.id).append('_').append(photo.getSecret()).append("_c.jpg");       
+        stringBuilder.append(photo.id).append('_').append(photo.getSecret()).append("_c.jpg");
         return stringBuilder.toString();
     }
-    
+
     @Override
     public String toString()
     {
         StringBuilder stringBuilder = new StringBuilder();
         Field fields[] = this.getClass().getDeclaredFields();
-        
+
         for(Field field : fields)
         {
             stringBuilder.append(field.getName());
@@ -124,7 +127,7 @@ public class Photo
             }
             stringBuilder.append("\n");
         }
-        
+
         return stringBuilder.toString();
     }
 }

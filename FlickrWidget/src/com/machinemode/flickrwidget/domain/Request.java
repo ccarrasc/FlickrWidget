@@ -1,11 +1,13 @@
 package com.machinemode.flickrwidget.domain;
 
-
 public class Request
 {
-    private Request() { }
-    
-    public static String buildRequest(String uri, String api_key, String format, RequestParams params)
+    private Request()
+    {
+    }
+
+    public static String buildRequest(String uri, String api_key, String format,
+            RequestParams params)
     {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -18,7 +20,7 @@ public class Request
         stringBuilder.append(format);
         stringBuilder.append("&nojsoncallback=1&");
         stringBuilder.append(params.toQueryString());
-        
+
         return stringBuilder.toString();
     }
 }
