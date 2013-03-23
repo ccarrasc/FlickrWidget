@@ -79,9 +79,11 @@ public class WidgetUpdateService extends Service implements TaskCompleteListener
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, browserIntent, 0);
                 views.setOnClickPendingIntent(R.id.widget, pendingIntent);
 
-                views.setImageViewBitmap(R.id.thumbnail, photo.getBitmap());
+                views.setImageViewUri(R.id.thumbnail, photo.getBitmapUri());
                 views.setTextViewText(R.id.title, photo.getTitle());
-                views.setViewVisibility(R.id.progressBar, View.INVISIBLE);
+                views.setViewVisibility(R.id.progressBarWrapper, View.INVISIBLE);
+                
+                Log.i(TAG, photo.toString());
             }
             else
             {

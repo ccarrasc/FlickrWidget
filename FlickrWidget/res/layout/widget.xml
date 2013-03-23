@@ -29,15 +29,21 @@
 	            android:adjustViewBounds="true"
 	            android:scaleType="fitXY"
 	            android:src="@android:drawable/gallery_thumb" />
-	    
-	        <ProgressBar
-	            android:id="@+id/progressBar"
-	            android:visibility="visible"
-	            android:layout_centerInParent="true"
+	        
+	        <FrameLayout 
+	            android:id="@+id/progressBarWrapper"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            style="@android:style/Widget.ProgressBar.Small"
-	            android:layout_marginRight="5dp" />
+	            android:layout_centerInParent="true" >
+	            
+	            <ProgressBar
+	                android:id="@+id/progressBar"
+	                android:layout_width="match_parent"
+	                android:layout_height="match_parent"
+	                style="@android:style/Widget.ProgressBar.Small"
+	                android:visibility="visible" />
+	                       
+	        </FrameLayout>
 
         </RelativeLayout>
    
