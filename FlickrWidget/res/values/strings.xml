@@ -3,7 +3,7 @@
     <string name="imageDescription">Image</string>
     
     <string name="flickr_api_key"></string>
-    <string name="flickr_api_secret"></string>
+    <string name="flickr_api_secret">blah</string>
     
     <string name="flickr_response_format">json</string>
     <string name="flickr_interestingness_getList">http://api.flickr.com/services/rest/?method=flickr.interestingness.getList</string>
