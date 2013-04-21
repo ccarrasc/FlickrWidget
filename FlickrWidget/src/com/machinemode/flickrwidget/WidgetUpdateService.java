@@ -40,7 +40,7 @@ public class WidgetUpdateService extends Service implements TaskCompleteListener
         appWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
 
         new RequestPhotoList(this).execute(buildRequestUri());
-
+        
         return START_NOT_STICKY;
     }
 
@@ -78,12 +78,16 @@ public class WidgetUpdateService extends Service implements TaskCompleteListener
 
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, browserIntent, 0);
                 views.setOnClickPendingIntent(R.id.widget, pendingIntent);
-
-                views.setImageViewUri(R.id.thumbnail, photo.getBitmapUri());
-                views.setTextViewText(R.id.title, photo.getTitle());
-                views.setViewVisibility(R.id.progressBarWrapper, View.INVISIBLE);
                 
-                Log.i(TAG, photo.toString());
+                //Show who the owner is
+                views.setTextViewText(R.id.ownerTextView, "Owner: " + photo.getOwner());
+                views.setTextViewText(R.id.serverTextView, "Server: " + photo.getServer());
+                
+                
+                views.setImageViewBitmap(R.id.thumbnail, photo.getBitmap());
+                views.setTextViewText(R.id.title, photo.getTitle());
+                views.setViewVisibility(R.id.progressBar, View.INVISIBLE);
+                
             }
             else
             {

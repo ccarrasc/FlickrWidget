@@ -4,8 +4,8 @@
 <!-- As of 1.6, 30 minutes is the shortest period (1800000ms) -->
 
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:minWidth="40dp"
-    android:minHeight="40dp"
+    android:minWidth="160dp"
+    android:minHeight="160dp"
     android:minResizeWidth="40dp"
     android:minResizeHeight="40dp"
     android:updatePeriodMillis="1800000"

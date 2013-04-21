@@ -13,19 +13,14 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import com.machinemode.flickrwidget.domain.Interestingness;
 import com.machinemode.flickrwidget.domain.Photo;
 import com.machinemode.flickrwidget.util.HttpImageDecoder;
-import com.machinemode.flickrwidget.util.ImageStorage;
 
 import android.app.Service;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
 public class RequestPhotoList extends AsyncTask<String, Void, List<Interestingness>>
 {
     private static final String TAG = RequestPhotoList.class.getSimpleName();
-    private Context context;
     private TaskCompleteListener callback;
 
     public interface TaskCompleteListener
@@ -35,8 +30,6 @@ public class RequestPhotoList extends AsyncTask<String, Void, List<Interestingne
 
     public RequestPhotoList(Service updateService)
     {
-        context = updateService.getApplicationContext();
-        
         try
         {
             callback = (TaskCompleteListener)updateService;
@@ -79,14 +72,10 @@ public class RequestPhotoList extends AsyncTask<String, Void, List<Interestingne
 
                         if(!interestingness.getStat().equals("fail"))
                         {
-                            List<Photo> photos = interestingness.getPhotos().getPhoto();
-                            for(int i = 0; i < photos.size(); ++i)
+                            for(Photo photo : interestingness.getPhotos().getPhoto())
                             {
-                                Photo photo = photos.get(i);
                                 photo.setUrl(Photo.buildUrl(photo));
-                                Bitmap bitmap = HttpImageDecoder.decodeUrl(photo.getUrl(), 800, 800);
-                                Uri uri = ImageStorage.saveBitmapAsJPEG(context, bitmap, String.valueOf(i) + ".jpeg");
-                                photo.setBitmapUri(uri);
+                                photo.setBitmap(HttpImageDecoder.decodeUrl(photo.getUrl(), 800, 800));
                             }
                         }
                         interestingnessList.add(interestingness);

@@ -8,65 +8,76 @@
         android:id="@+id/widget"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white" 
-        android:orientation="horizontal"
-        android:clickable="true">
-        
-        <RelativeLayout 
-		    android:id="@+id/thumbnailFrame"
-		    android:layout_width="match_parent"
-		    android:layout_height="match_parent"
-		    android:layout_alignParentTop="true"
-		    android:layout_alignParentLeft="true" >
-    
-	        <ImageView
-	            android:id="@+id/thumbnail"
-	            android:contentDescription="@string/imageDescription"
-	            android:layout_width="match_parent"
-	            android:layout_height="match_parent"
-	            android:layout_alignParentLeft="true"
-	            android:layout_alignParentTop="true"
-	            android:adjustViewBounds="true"
-	            android:scaleType="fitXY"
-	            android:src="@android:drawable/gallery_thumb" />
-	        
-	        <FrameLayout 
-	            android:id="@+id/progressBarWrapper"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_centerInParent="true" >
-	            
-	            <ProgressBar
-	                android:id="@+id/progressBar"
-	                android:layout_width="match_parent"
-	                android:layout_height="match_parent"
-	                style="@android:style/Widget.ProgressBar.Small"
-	                android:visibility="visible" />
-	                       
-	        </FrameLayout>
+        android:background="@android:color/black"
+        android:clickable="true"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:id="@+id/thumbnailFrame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/infoLayout"
+            android:layout_alignParentTop="true" >
+
+            <ImageView
+                android:id="@+id/thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/imageDescription"
+                android:scaleType="fitXY"
+                android:src="@android:drawable/gallery_thumb" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="@android:style/Widget.ProgressBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="5dp"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/infoLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" >
+
+            <TextView
+                android:id="@+id/ownerTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/flickr_ownerName" />
+
+            <TextView
+                android:id="@+id/updateCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ownerTextView"
+                android:background="#7F000000"
+                android:textColor="#FFFFFFFF"
+                android:textIsSelectable="false" />
+
+            <TextView
+                android:id="@+id/serverTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/updateCounter" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/serverTextView"
+                android:background="#7F000000"
+                android:textColor="#FFFFFFFF"
+                android:textIsSelectable="false" />
 
         </RelativeLayout>
-   
-        <TextView
-	        android:id="@+id/title"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content" 
-	        android:textIsSelectable="false"
-	        android:layout_alignParentTop="true"
-	        android:layout_centerHorizontal="true"
-	        android:textColor="#FFFFFFFF"
-	        android:background="#7F000000"/>
-            
-        <TextView
-            android:id="@+id/updateCounter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-            android:textIsSelectable="false"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:textColor="#FFFFFFFF"
-            android:background="#7F000000"/>
-        
     </RelativeLayout>
 	
 </FrameLayout>	
