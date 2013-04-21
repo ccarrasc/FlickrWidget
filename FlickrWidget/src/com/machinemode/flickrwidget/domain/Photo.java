@@ -3,7 +3,6 @@ package com.machinemode.flickrwidget.domain;
 import java.lang.reflect.Field;
 
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.util.Log;
 
 public class Photo
@@ -20,7 +19,7 @@ public class Photo
     private boolean isfriend;
     private boolean isfamily;
     private transient String url = new String();
-    private transient Uri bitmapUri;
+    private transient Bitmap bitmap;
 
     public Photo()
     {
@@ -81,21 +80,22 @@ public class Photo
         this.url = url;
     }
 
-    public Uri getBitmapUri()
+    public Bitmap getBitmap()
     {
-        return bitmapUri;
+        return bitmap;
     }
 
-    public void setBitmapUri(Uri bitmapUri)
+    public void setBitmap(Bitmap bitmap)
     {
-        this.bitmapUri = bitmapUri;
+        this.bitmap = bitmap;
     }
 
     public static String buildUrl(Photo photo)
     {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("http://");
-        stringBuilder.append("farm").append(String.valueOf(photo.getFarm())).append(".staticflickr.com/");
+        stringBuilder.append("farm").append(String.valueOf(photo.getFarm()))
+                .append(".staticflickr.com/");
         stringBuilder.append(photo.getServer()).append('/');
         stringBuilder.append(photo.id).append('_').append(photo.getSecret()).append("_c.jpg");
         return stringBuilder.toString();
