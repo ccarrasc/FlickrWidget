@@ -1,12 +1,12 @@
 package com.machinemode.flickrwidget;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import com.machinemode.flickrwidget.client.RequestPhotoList;
 import com.machinemode.flickrwidget.client.RequestPhotoList.TaskCompleteListener;
-import com.machinemode.flickrwidget.domain.Interestingness;
 import com.machinemode.flickrwidget.domain.Photo;
 import com.machinemode.flickrwidget.domain.Request;
 import com.machinemode.flickrwidget.domain.RequestParams;
@@ -14,6 +14,7 @@ import com.machinemode.flickrwidget.domain.RequestParams;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -24,22 +25,26 @@ import android.widget.RemoteViews;
 
 public class WidgetUpdateService extends Service implements TaskCompleteListener
 {
-    private static final String TAG = WidgetUpdateService.class.getSimpleName();
-    private static int updateCount = 0;
-
     private Context context;
     private AppWidgetManager appWidgetManager;
+    private int[] allAppWidgetIds;
     private int[] appWidgetIds;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        Log.i(TAG, "onStartCommand()");
         context = getApplicationContext();
         appWidgetManager = AppWidgetManager.getInstance(context);
         appWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
-
-        new RequestPhotoList(this).execute(buildRequestUri());
+        allAppWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, WidgetProvider.class));
+        
+        
+        // Show the progress indicator in all the widgets
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
+        views.setViewVisibility(R.id.progressBarWrapper, View.VISIBLE);
+        appWidgetManager.updateAppWidget(appWidgetIds, views);
+        
+        new RequestPhotoList(this).execute(buildRequestUri(allAppWidgetIds.length));
 
         return START_NOT_STICKY;
     }
@@ -51,27 +56,23 @@ public class WidgetUpdateService extends Service implements TaskCompleteListener
     }
 
     @Override
-    public void onTaskComplete(List<Interestingness> interestingnessList)
+    public void onTaskComplete(List<Photo> photoList)
     {
-        if(!interestingnessList.isEmpty())
+        if(!photoList.isEmpty())
         {
-            // Just get the first response for now...
-            updateWidgets(interestingnessList.get(0));
+            updateWidgets(photoList);
         }
     }
 
-    private void updateWidgets(Interestingness interestingness)
-    {
-        List<Photo> photoList = interestingness.getPhotos().getPhoto();
-
-        for(int id : appWidgetIds)
+    private void updateWidgets(List<Photo> photoList)
+    {   
+        for(int i = 0; i < allAppWidgetIds.length; ++i)
         {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
-            views.setTextViewText(R.id.updateCounter, String.valueOf(updateCount++));
-
+          
             if(!photoList.isEmpty())
             {
-                Photo photo = photoList.get(0);
+                Photo photo = photoList.get(i % photoList.size());
 
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(photo.getUrl()));
                 browserIntent.addCategory(Intent.CATEGORY_BROWSABLE);
@@ -80,35 +81,32 @@ public class WidgetUpdateService extends Service implements TaskCompleteListener
                 views.setOnClickPendingIntent(R.id.widget, pendingIntent);
 
                 views.setImageViewUri(R.id.thumbnail, photo.getBitmapUri());
-                views.setTextViewText(R.id.title, photo.getTitle());
-                views.setViewVisibility(R.id.progressBarWrapper, View.INVISIBLE);
-                
-                Log.i(TAG, photo.toString());
+                views.setViewVisibility(R.id.progressBarWrapper, View.INVISIBLE);    
+                Log.i("FlickrWidget", "widget:" + i);
+                Log.i("FlickrWidget", photo.toString());
             }
             else
             {
-                views.setTextViewText(R.id.title, "No images found");
+                // TODO: These don't appear to work
+                views.setOnClickPendingIntent(R.id.widget, null);
+                views.setImageViewResource(R.id.thumbnail, R.drawable.ic_launcher);
+                views.setViewVisibility(R.id.progressBarWrapper, View.INVISIBLE);  
             }
 
-            appWidgetManager.updateAppWidget(id, views);
+            appWidgetManager.updateAppWidget(allAppWidgetIds[i], views);
+            
         }
     }
 
-    private String buildRequestUri()
+    private String buildRequestUri(int widgetCount)
     {
         String uri = context.getString(R.string.flickr_interestingness_getList);
-        String api_key = context.getString(R.string.flickr_api_key);
+        String api_key = context.getString(R.string.api_key);
         String format = context.getString(R.string.flickr_response_format);
 
         RequestParams params = new RequestParams();
-        params.setPerPage(5);
-
-        Date date = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DATE, -1);
-        params.setDate(calendar.getTime());
-
+        params.setPerPage(widgetCount);
+       
         return Request.buildRequest(uri, api_key, format, params);
     }
 }

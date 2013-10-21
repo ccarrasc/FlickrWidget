@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:padding="@dimen/widget_margin" >
 
-    <RelativeLayout
+   <RelativeLayout
         android:id="@+id/widget"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -46,27 +46,7 @@
 	        </FrameLayout>
 
         </RelativeLayout>
-   
-        <TextView
-	        android:id="@+id/title"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content" 
-	        android:textIsSelectable="false"
-	        android:layout_alignParentTop="true"
-	        android:layout_centerHorizontal="true"
-	        android:textColor="#FFFFFFFF"
-	        android:background="#7F000000"/>
-            
-        <TextView
-            android:id="@+id/updateCounter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-            android:textIsSelectable="false"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:textColor="#FFFFFFFF"
-            android:background="#7F000000"/>
-        
+
     </RelativeLayout>
 	
 </FrameLayout>	

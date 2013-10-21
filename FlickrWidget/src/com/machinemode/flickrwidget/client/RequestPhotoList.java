@@ -22,7 +22,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class RequestPhotoList extends AsyncTask<String, Void, List<Interestingness>>
+public class RequestPhotoList extends AsyncTask<String, Void, List<Photo>>
 {
     private static final String TAG = RequestPhotoList.class.getSimpleName();
     private Context context;
@@ -30,7 +30,7 @@ public class RequestPhotoList extends AsyncTask<String, Void, List<Interestingne
 
     public interface TaskCompleteListener
     {
-        public void onTaskComplete(List<Interestingness> interestingnessList);
+        public void onTaskComplete(List<Photo> photoList);
     }
 
     public RequestPhotoList(Service updateService)
@@ -49,11 +49,11 @@ public class RequestPhotoList extends AsyncTask<String, Void, List<Interestingne
     }
 
     @Override
-    protected List<Interestingness> doInBackground(String... urls)
+    protected List<Photo> doInBackground(String... urls)
     {
         HttpClient client = new DefaultHttpClient();
         HttpResponse response;
-        List<Interestingness> interestingnessList = new ArrayList<Interestingness>();
+        List<Photo> photoList = new ArrayList<Photo>();
 
         for(String url : urls)
         {
@@ -67,29 +67,24 @@ public class RequestPhotoList extends AsyncTask<String, Void, List<Interestingne
                 HttpEntity entity = response.getEntity();
                 int responseCode = response.getStatusLine().getStatusCode();
 
-                if(entity != null)
+                if(entity != null && responseCode == HttpStatus.SC_OK)
                 {
-                    if(responseCode == HttpStatus.SC_OK)
+                    interestingness = ResponseParser.readJsonFeed(entity.getContent());
+
+                    if(!interestingness.getStat().equals("fail"))
                     {
-                        Log.i(TAG, "Content-Type: " + entity.getContentType().getValue());
-                        Log.i(TAG, "Content-Length: " + String.valueOf(entity.getContentLength()));
-
-                        interestingness = ResponseParser.readJsonFeed(entity.getContent());
-                        Log.i(TAG, interestingness.toString());
-
-                        if(!interestingness.getStat().equals("fail"))
+                        List<Photo> photos = interestingness.getPhotos().getPhoto();
+                        for(int i = 0; i < photos.size(); ++i)
                         {
-                            List<Photo> photos = interestingness.getPhotos().getPhoto();
-                            for(int i = 0; i < photos.size(); ++i)
-                            {
-                                Photo photo = photos.get(i);
-                                photo.setUrl(Photo.buildUrl(photo));
-                                Bitmap bitmap = HttpImageDecoder.decodeUrl(photo.getUrl(), 800, 800);
-                                Uri uri = ImageStorage.saveBitmapAsJPEG(context, bitmap, String.valueOf(i) + ".jpeg");
-                                photo.setBitmapUri(uri);
-                            }
+                            // TODO: need a cache
+                            Photo photo = photos.get(i);
+                            photo.setUrl(Photo.buildUrl(photo));
+                            Bitmap bitmap = HttpImageDecoder.decodeUrl(photo.getUrl(), 800, 800);
+                            Uri uri = ImageStorage.saveBitmapAsJPEG(context, bitmap, String.valueOf(i) + ".jpeg");
+                            photo.setBitmapUri(uri);
                         }
-                        interestingnessList.add(interestingness);
+                        
+                        photoList.addAll(photos);
                     }
                 }
             }
@@ -99,12 +94,12 @@ public class RequestPhotoList extends AsyncTask<String, Void, List<Interestingne
             }
         }
 
-        return interestingnessList;
+        return photoList;
     }
 
     @Override
-    protected void onPostExecute(List<Interestingness> interestingnessList)
+    protected void onPostExecute(List<Photo> photoList)
     {
-        callback.onTaskComplete(interestingnessList);
+        callback.onTaskComplete(photoList);
     }
 }

@@ -90,6 +90,6 @@ public class WidgetProvider extends AppWidgetProvider
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
         context.startService(intent);
 
-        Log.i(TAG, "onUpdate()");
+        Log.i(TAG, "appWidgetIds: " + appWidgetIds);
     }
 }
