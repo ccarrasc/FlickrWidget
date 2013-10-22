@@ -1,4 +1,4 @@
-package com.machinemode.flickrwidget;
+package com.machinemode.imspire;
 
 import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
@@ -89,7 +89,5 @@ public class WidgetProvider extends AppWidgetProvider
         Intent intent = new Intent(context.getApplicationContext(), WidgetUpdateService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
         context.startService(intent);
-
-        Log.i(TAG, "appWidgetIds: " + appWidgetIds);
     }
 }

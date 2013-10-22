@@ -1,4 +1,4 @@
-package com.machinemode.flickrwidget.domain;
+package com.machinemode.imspire.domain;
 
 public class Request
 {

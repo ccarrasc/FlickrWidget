@@ -1,15 +1,12 @@
-package com.machinemode.flickrwidget;
+package com.machinemode.imspire;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-import com.machinemode.flickrwidget.client.RequestPhotoList;
-import com.machinemode.flickrwidget.client.RequestPhotoList.TaskCompleteListener;
-import com.machinemode.flickrwidget.domain.Photo;
-import com.machinemode.flickrwidget.domain.Request;
-import com.machinemode.flickrwidget.domain.RequestParams;
+import com.machinemode.imspire.client.RequestPhotoList;
+import com.machinemode.imspire.client.RequestPhotoList.TaskCompleteListener;
+import com.machinemode.imspire.domain.Photo;
+import com.machinemode.imspire.domain.Request;
+import com.machinemode.imspire.domain.RequestParams;
 
 import android.app.PendingIntent;
 import android.app.Service;
@@ -19,7 +16,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -36,8 +32,7 @@ public class WidgetUpdateService extends Service implements TaskCompleteListener
         context = getApplicationContext();
         appWidgetManager = AppWidgetManager.getInstance(context);
         appWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
-        allAppWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, WidgetProvider.class));
-        
+        allAppWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, WidgetProvider.class));  
         
         // Show the progress indicator in all the widgets
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
@@ -82,12 +77,10 @@ public class WidgetUpdateService extends Service implements TaskCompleteListener
 
                 views.setImageViewUri(R.id.thumbnail, photo.getBitmapUri());
                 views.setViewVisibility(R.id.progressBarWrapper, View.INVISIBLE);    
-                Log.i("FlickrWidget", "widget:" + i);
-                Log.i("FlickrWidget", photo.toString());
             }
             else
             {
-                // TODO: These don't appear to work
+                // TODO: This doesn't appear to get hit
                 views.setOnClickPendingIntent(R.id.widget, null);
                 views.setImageViewResource(R.id.thumbnail, R.drawable.ic_launcher);
                 views.setViewVisibility(R.id.progressBarWrapper, View.INVISIBLE);  

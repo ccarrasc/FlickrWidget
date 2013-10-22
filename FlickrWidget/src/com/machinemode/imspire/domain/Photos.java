@@ -1,4 +1,4 @@
-package com.machinemode.flickrwidget.domain;
+package com.machinemode.imspire.domain;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

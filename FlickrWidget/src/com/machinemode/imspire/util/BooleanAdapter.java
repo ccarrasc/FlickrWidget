@@ -1,4 +1,4 @@
-package com.machinemode.flickrwidget.util;
+package com.machinemode.imspire.util;
 
 import java.io.IOException;
 

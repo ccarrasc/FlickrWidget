@@ -1,4 +1,4 @@
-package com.machinemode.flickrwidget.util;
+package com.machinemode.imspire.util;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,21 +58,21 @@ public final class HttpImageDecoder
                 }
                 else
                 {
-                    Log.w(TAG, "sampledBitmap is null!?!?!");
+                    //Log.w(TAG, "sampledBitmap is null!?!?!");
                 }
             }
             else
             {
-                Log.i(TAG, "Disgarding " + urlString + " since it's too big!");
+                //Log.i(TAG, "Disgarding " + urlString + " since it's too big!");
             }
         }
         catch(MalformedURLException e)
         {
-            Log.e(TAG + ":MalformedURLException", e.getMessage() + ":" + urlString);
+            //Log.e(TAG + ":MalformedURLException", e.getMessage() + ":" + urlString);
         }
         catch(IOException e)
         {
-            Log.e(TAG + ":IOException", e.getMessage() + ":" + urlString);
+            //Log.e(TAG + ":IOException", e.getMessage() + ":" + urlString);
         }
 
         return bitmap;

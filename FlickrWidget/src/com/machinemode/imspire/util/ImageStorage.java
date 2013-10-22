@@ -1,4 +1,4 @@
-package com.machinemode.flickrwidget.util;
+package com.machinemode.imspire.util;
 
 import java.io.BufferedOutputStream;
 
@@ -25,7 +25,7 @@ public class ImageStorage
         }
         catch(Exception e)
         {
-            Log.e(TAG, e.getMessage());
+            //Log.e(TAG, e.getMessage());
         }
                 
         return Uri.fromFile(context.getFileStreamPath(filename));

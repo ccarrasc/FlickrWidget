@@ -1,16 +1,14 @@
-package com.machinemode.flickrwidget.client;
+package com.machinemode.imspire.client;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.machinemode.flickrwidget.domain.Interestingness;
-import com.machinemode.flickrwidget.util.BooleanAdapter;
+import com.machinemode.imspire.domain.Interestingness;
+import com.machinemode.imspire.util.BooleanAdapter;
 
 public class ResponseParser
 {
@@ -35,11 +33,11 @@ public class ResponseParser
         }
         catch(JsonSyntaxException e)
         {
-            Log.e(TAG, "JsonSyntaxException: " + e.getMessage());
+            //Log.e(TAG, "JsonSyntaxException: " + e.getMessage());
         }
         catch(JsonIOException e)
         {
-            Log.e(TAG, "JsonIOException: " + e.getMessage());
+            //Log.e(TAG, "JsonIOException: " + e.getMessage());
         }
 
         return interestingness;

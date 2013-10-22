@@ -1,4 +1,4 @@
-package com.machinemode.flickrwidget.client;
+package com.machinemode.imspire.client;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,17 +10,16 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import com.machinemode.flickrwidget.domain.Interestingness;
-import com.machinemode.flickrwidget.domain.Photo;
-import com.machinemode.flickrwidget.util.HttpImageDecoder;
-import com.machinemode.flickrwidget.util.ImageStorage;
+import com.machinemode.imspire.domain.Interestingness;
+import com.machinemode.imspire.domain.Photo;
+import com.machinemode.imspire.util.HttpImageDecoder;
+import com.machinemode.imspire.util.ImageStorage;
 
 import android.app.Service;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 
 public class RequestPhotoList extends AsyncTask<String, Void, List<Photo>>
 {
@@ -57,7 +56,6 @@ public class RequestPhotoList extends AsyncTask<String, Void, List<Photo>>
 
         for(String url : urls)
         {
-            Log.i(TAG, url);
             Interestingness interestingness = new Interestingness();
 
             try
@@ -90,7 +88,7 @@ public class RequestPhotoList extends AsyncTask<String, Void, List<Photo>>
             }
             catch(Exception e)
             {
-                Log.e(TAG, "Exception: " + e.getMessage());
+                //Log.e(TAG, "Exception: " + e.getMessage());
             }
         }
 

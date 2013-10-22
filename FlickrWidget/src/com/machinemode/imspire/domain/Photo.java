@@ -1,8 +1,7 @@
-package com.machinemode.flickrwidget.domain;
+package com.machinemode.imspire.domain;
 
 import java.lang.reflect.Field;
 
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 
