@@ -50,6 +50,7 @@ public class RequestPhotoList extends AsyncTask<String, Void, List<Photo>>
     @Override
     protected List<Photo> doInBackground(String... urls)
     {
+        // TODO: Look into using HttpURLConnection instead: http://developer.android.com/reference/java/net/HttpURLConnection.html
         HttpClient client = new DefaultHttpClient();
         HttpResponse response;
         List<Photo> photoList = new ArrayList<Photo>();
